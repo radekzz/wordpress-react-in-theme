@@ -55,7 +55,8 @@ We're not building this app and JS file will stay uncompiled. To be able to run 
 add_filter('style_loader_tag', 'javascript_to_babel', 10, 2);
 add_filter('script_loader_tag', 'javascript_to_babel', 10, 2);
 function javascript_to_babel($tag, $handle) {
-		return str_replace( "<script type='text/javascript'", "<script type='text/babel'", $tag );
+	if ( 'my-react-app' !== $handle) : return $tag; endif;
+	return str_replace( "<script type='text/javascript'", "<script type='text/babel'", $tag );
 }
 ```
 
