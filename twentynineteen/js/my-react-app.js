@@ -4,7 +4,7 @@ class MyForm extends React.Component {
   //remember to pass in props
   constructor(props) {
 		super(props);
-		this.state = personData;
+		this.state = JSON.parse(personData);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

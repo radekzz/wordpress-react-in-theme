@@ -37,7 +37,7 @@ $data_array = array(
 	'yourWebsite' => 'http://www.mezulanik.cz',
 );
 //Pass data to Javascript
-wp_localize_script( 'my-react-app', 'personData', $data_array );
+wp_localize_script( 'my-react-app', 'personData', json_encode($data_array) );
 
 // Enqueued script with localized data.
 wp_enqueue_script( 'my-react-app' );
