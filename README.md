@@ -55,7 +55,7 @@ function javascript_to_babel($tag, $handle) {
 }
 ```
 
-## 1b. way without building the app (compile)
+## 1b. way - compile the app
 
 Edit your app in
 `{root_folder}/wp-content/themes/twentynineteen/js-src/my-react-app.js`
