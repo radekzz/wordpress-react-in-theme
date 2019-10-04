@@ -6,22 +6,16 @@ If you don't want to use WordPress REST API and then read JSON in React, there a
 
 ## Installation
 
-Copy theme file to folder 
+Copy theme file to folder
 
-``
-{root_folder}/wp-content/themes/
-``
+`{root_folder}/wp-content/themes/`
 
-## 1. way without building the app (using BABEL)
+## 1a. way without building the app (using BABEL)
 
-Edit your app in 
-``
-{root_folder}/wp-content/themes/twentynineteen/js/my-react-app.js
-``
+Edit your app in
+`{root_folder}/wp-content/themes/twentynineteen/js/my-react-app.js`
 
-Include js file and pass data to react js in theme file ``
-{root_folder}/wp-content/themes/twentynineteen/template-parts/content/content-page.php
-`` like this:
+Include js file and pass data to react js in theme file `{root_folder}/wp-content/themes/twentynineteen/template-parts/content/content-page.php` like this:
 
 ```
 // Register the script
@@ -50,7 +44,8 @@ constructor(props) {
 }
 ```
 
-We're not building this app and JS file will stay uncompiled. To be able to run JSX code in WP, you have to change include type to `babel` in end of the ``functions.php`` file:
+LAST STEP: We're not building this app and JS file will stay uncompiled. To be able to run JSX code in WP, you have to change include type to `babel` in end of the `functions.php` file:
+
 ```
 add_filter('style_loader_tag', 'javascript_to_babel', 10, 2);
 add_filter('script_loader_tag', 'javascript_to_babel', 10, 2);
@@ -60,18 +55,39 @@ function javascript_to_babel($tag, $handle) {
 }
 ```
 
+## 1b. way without building the app (compile)
+
+Edit your app in
+`{root_folder}/wp-content/themes/twentynineteen/js-src/my-react-app.js`
+and build it using
+
+```
+npm run build
+```
+
+you can also use
+
+```
+npm run watch
+```
+
+to run build automatically after every change.
+
+Then you don't need to do last step from 1a because babel will be compiled already. It's better to move your js-src folder outside from theme folder so uncompiled files wouldn't sit on the server after deploy.
+`I recommend this way as it's safe with compiled output and lightweight to build one page apps.`
+
 ## 2. way with standalone app included into WP
 
-Edit your classic React app in 
-``
-{root_folder}/wp-content/themes/twentynineteen/myReactApp/
-``
-and build it using 
+Edit your classic React app in
+`{root_folder}/wp-content/themes/twentynineteen/myReactApp/`
+and build it using
+
 ```
 yarn build
 ```
 
-Go to end of the ``functions.php`` and include all JS and CSS files to WordPress:
+Go to end of the `functions.php` and include all JS and CSS files to WordPress:
+
 ```
 add_action( 'wp_enqueue_scripts', 'enqueue_my_react_app' );
 function enqueue_my_react_app(){
@@ -91,6 +107,7 @@ function enqueue_my_react_app(){
 Then in `content-page.php` create app root container `<div id="root"></div>` so the app will run inside.
 
 You can pass data from PHP to React by inserting script into this theme file:
+
 ```
 <script>
     window.reactInit = {
@@ -108,5 +125,6 @@ In React app you will be able to access variable scriptData like this
 I'm using a public folder for logo here, because relative path to the logo is different in WP than in React, so you can pass custom path as parameter.
 
 ## FAQ
-If you know about some better way how to do this, feel free to let me know on 
+
+If you know about some better way how to do this, feel free to let me know on
 [www.mezulanik.cz](http://mezulanik.cz).
